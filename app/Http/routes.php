@@ -11,6 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'AppController@index');
+
+Route::group(['middleware'=>'auth','prefix'=>'master'], function () {
+    Route::resource('karyawan','KaryawanController');
+    Route::resource('divisi','DivisiController');
+    Route::resource('jatah-cuti','JatahCutiController');
 });
+
+Route::resource('pengajuan-cuti','PengajuanCutiController');
