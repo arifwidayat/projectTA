@@ -33,7 +33,7 @@ class KaryawanDataTable extends DataTable
      */
     public function query()
     {
-        $query = Karyawan::query();
+        $query = Karyawan::query()->where('id','!=',auth()->id());
 
         return $this->applyScopes($query);
     }

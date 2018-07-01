@@ -26,6 +26,7 @@ class AppController extends Controller
     	}
     	
 		if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+            $this->cekjatahcuti();
 			Alert::success('Login Berhasil');
             return redirect()->intended('dashboard');
         }
@@ -42,6 +43,7 @@ class AppController extends Controller
     }
 
 	public function dashboard(){
+        $this->cekjatahcuti();
 		return view('dashboard');
 	}
 }

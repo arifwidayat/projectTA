@@ -9,10 +9,15 @@ use App\Http\Requests;
 use App\DataTables\PengajuanCutiDataTable;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Models\Cuti;
+use App\Models\JatahCuti;
 use Alert;
 
 class PengajuanCutiController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,6 +25,7 @@ class PengajuanCutiController extends Controller
      */
     public function index(PengajuanCutiDataTable $cuti)
     {
+        $this->cekjatahcuti();
         $title= 'Data Pengajuan Cuti';
         $link = route('pengajuan-cuti.create');
         return $cuti->render('masterdata.index',compact('title','link'));
@@ -32,10 +38,19 @@ class PengajuanCutiController extends Controller
      */
     public function create(FormBuilder $formBuilder)
     {
+        $this->cekjatahcuti();
 
         $cuti = Cuti::where('karyawan_id',auth()->id())->where('status','propose')->count();
+        
+        $jatahcuti = JatahCuti::where('karyawan_id',auth()->id())->where('tahun',date('Y'))->first();
+
         if($cuti>0){
             Alert::warning('Maaf, Masih ada pengajuan cuti yang belum selesai')->persistent('OK');
+            return back();
+        }
+
+        if(is_null($jatahcuti)||$jatahcuti->jumlah_cuti==0){
+            Alert::warning('Maaf, Jumlah Cuti Anda Sudah Habis')->persistent('OK');
             return back();
         }
          $form = $formBuilder->create(\App\Forms\PengajuanCuti::class, [
@@ -43,7 +58,8 @@ class PengajuanCutiController extends Controller
             'route' => 'pengajuan-cuti.store'
         ]);
         $title= 'Tambah Data Pengajuan Cuti';
-        return view('masterdata.form',compact('form','title'));
+        $sisacuti=JatahCuti::where('karyawan_id',auth()->id())->first();
+        return view('masterdata.form',compact('form','title','sisacuti'));
     }
 
     /**
@@ -146,10 +162,12 @@ class PengajuanCutiController extends Controller
     }
 
     public function status($id,$status){
-        Cuti::find($id)->update(['status'=>$status]);
+        $cuti = Cuti::find($id)->update(['status'=>$status]);
+        $jatahcuti=JatahCuti::where('karyawan_id',$cuti->karyawan_id)->first();
         if($status=='approved'){
             $status='Diterima';
         }elseif($status=='verified'){
+            $jatahcuti->update(['jumlah_cuti'=>$jatahcuti->jumlah_cuti-1]);
             $status='Diverifikasi';
         }elseif($status=='rejected'){
             $status='Ditolak';

@@ -48,7 +48,7 @@ class JatahCutiController extends Controller
      */
     public function store(Request $request)
     {
-        JatahCuti::create($request->except(['_token']));
+        JatahCuti::updateOrCreate(['karyawan_id'=>$request->karyawan_id,'tahun'=>$request->tahun],['jumlah_cuti'=>$request->jumlah_cuti]);
         Alert::success('Data Berhasil Ditambahkan');
         return redirect('master/jatah-cuti');
     }
