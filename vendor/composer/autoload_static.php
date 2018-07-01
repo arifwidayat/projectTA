@@ -312,12 +312,10 @@ class ComposerStaticInite5082dda4691ee8d14a7c6db8ce61e37
     );
 
     public static $classMap = array (
-        'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreateTableCuti' => __DIR__ . '/../..' . '/database/migrations/2018_06_28_192124_create_table_cuti.php',
-        'CreateTableDivisi' => __DIR__ . '/../..' . '/database/migrations/2018_06_28_192101_create_table_divisi.php',
+        'CreateTableDivisi' => __DIR__ . '/../..' . '/database/migrations/2018_06_28_192046_create_table_divisi.php',
         'CreateTableJatahCuti' => __DIR__ . '/../..' . '/database/migrations/2018_06_28_192114_create_table_jatah_cuti.php',
-        'CreateTableKaryawan' => __DIR__ . '/../..' . '/database/migrations/2018_06_28_192046_create_table_karyawan.php',
-        'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
+        'CreateTableKaryawan' => __DIR__ . '/../..' . '/database/migrations/2018_06_28_192101_create_table_karyawan.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',

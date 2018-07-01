@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name') }}</title>
+    <title>Login</title>
 
 <script src="{{asset('vendor/jquery/dist/jquery.min.js')}}"></script>
 
@@ -17,6 +17,9 @@
 
 <link rel="stylesheet" type="text/css" href="{!! asset('css/login.css') !!}">
 <script type="text/javascript" src="{!! asset('js/login.js') !!}"></script>
+
+<link rel="stylesheet" type="text/css" href="{{ asset('vendor/sweet-alert/sweet-alert.css') }}">
+<script type="text/javascript" src="{{ asset('vendor/sweet-alert/sweetalert.min.js') }}"></script>
 
 </head>
 <body>
@@ -29,11 +32,11 @@
 
                 <div class="form-group row">
                     <div class="col-md-12">
-                        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" placeholder="E-mail" required autofocus>
+                        <input id="username" type="username" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" placeholder="Username" required autofocus>
 
-                        @if ($errors->has('email'))
+                        @if ($errors->has('username'))
                             <span class="invalid-feedback">
-                                <strong>{{ $errors->first('email') }}</strong>
+                                <strong>{{ $errors->first('username') }}</strong>
                             </span>
                         @endif
                     </div>
@@ -59,5 +62,6 @@
     </div><!-- /#login-box -->
 </div><!-- /.container -->
 <div id="particles-js"></div>
+ @include('sweet::alert')
 </body>
 </html>

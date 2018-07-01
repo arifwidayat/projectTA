@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\DataTables\DivisiDataTable;
+use Kris\LaravelFormBuilder\FormBuilder;
+use App\Models\Divisi;
+use Alert;
+
 class DivisiController extends Controller
 {
     /**
@@ -13,9 +18,11 @@ class DivisiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(DivisiDataTable $divisi)
     {
-        //
+        $title= 'Data Master Divisi';
+        $link = route('master.divisi.create');
+        return $divisi->render('masterdata.index',compact('title','link'));
     }
 
     /**
@@ -23,9 +30,14 @@ class DivisiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(FormBuilder $formBuilder)
     {
-        //
+        $form = $formBuilder->create(\App\Forms\Divisi::class, [
+            'method' => 'POST',
+            'route' => 'master.divisi.store'
+        ]);
+        $title= 'Tambah Data Divisi';
+        return view('masterdata.form',compact('form','title'));
     }
 
     /**
@@ -36,7 +48,13 @@ class DivisiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $this->validate($request,[
+            'nama'=>'required|unique:divisi,nama',
+        ]);
+
+        Divisi::create($request->except(['_token']));
+        Alert::success('Data Berhasil Ditambahkan');
+        return redirect('master/divisi');
     }
 
     /**
@@ -56,9 +74,18 @@ class DivisiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(FormBuilder $formBuilder,$id)
     {
-        //
+        $model = Divisi::find($id);
+        $form = $formBuilder->create(\App\Forms\Divisi::class, [
+            'method' => 'PUT',
+            'route' => ['master.divisi.update',$id],
+            'model' =>$model
+        ]);
+
+        $title= 'Ubah Data Master Divisi';
+
+        return view('masterdata.form',compact('form','title'));
     }
 
     /**
@@ -70,7 +97,13 @@ class DivisiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         $validate = $this->validate($request,[
+            'nama'=>'required|unique:divisi,nama,'.$id,
+        ]);
+
+        Divisi::find($id)->update($request->except(['_token']));
+        Alert::success('Data Berhasil Diubah');
+        return redirect('master/divisi');
     }
 
     /**
@@ -81,6 +114,8 @@ class DivisiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Divisi::find($id)->delete();
+        Alert::success('Data Deleted');
+        return redirect('master/divisi');
     }
 }

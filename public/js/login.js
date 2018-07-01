@@ -1,16 +1,16 @@
-$.getScript("https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js", function(){
+$.getScript("../js/particles.min.js", function(){
     particlesJS('particles-js',
       {
         "particles": {
           "number": {
-            "value": 80,
+            "value": 60,
             "density": {
               "enable": true,
               "value_area": 800
             }
           },
           "color": {
-            "value": "#c0c0c0"
+            "value": "#999999"
           },
           "shape": {
             "type": "circle",
@@ -32,7 +32,7 @@ $.getScript("https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles
             "anim": {
               "enable": false,
               "speed": 1,
-              "opacity_min": 0.1,
+              "opacity_min": 0.3,
               "sync": false
             }
           },
@@ -48,9 +48,9 @@ $.getScript("https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles
           },
           "line_linked": {
             "enable": true,
-            "distance": 150,
+            "distance": 200,
             "color": "#999999",
-            "opacity": 0.4,
+            "opacity": 0.7,
             "width": 1
           },
           "move": {

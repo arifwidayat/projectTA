@@ -1,10 +1,17 @@
 <?php
 
 namespace App\Models;
+ 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Karyawan extends Model
-{
-    //
+class Karyawan extends Authenticatable
+{ 
+    protected $table = 'karyawan';
+    protected $guarded = [];
+    protected $hidden = ['password','remember_token'];
+	public $timestamps = false;
+	
+    public function cuti(){
+    	return $this->hasMany('App\Models\Cuti');
+    }
 }

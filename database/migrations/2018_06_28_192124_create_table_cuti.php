@@ -14,11 +14,13 @@ class CreateTableCuti extends Migration
     {
         Schema::create('cuti', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('no_pengajuan');
+            $table->integer('no_pengajuan');
+            $table->string('jenis_cuti');
             $table->date('tanggal_pengajuan');
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
             $table->text('keterangan');
+            $table->enum('status',['propose','approved','verified','rejected']);
 
             $table->integer('karyawan_id')->unsigned();
             $table->foreign('karyawan_id')->references('id')->on('karyawan');

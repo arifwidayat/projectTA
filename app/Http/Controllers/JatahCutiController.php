@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\DataTables\JatahCutiDataTable;
+use Kris\LaravelFormBuilder\FormBuilder;
+use App\Models\JatahCuti;
+use Alert;
+
 class JatahCutiController extends Controller
 {
     /**
@@ -13,9 +18,11 @@ class JatahCutiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(JatahCutiDataTable $jatahcuti)
     {
-        //
+        $title= 'Data Master Jatah Cuti';
+        $link = route('master.jatah-cuti.create');
+        return $jatahcuti->render('masterdata.index',compact('title','link'));
     }
 
     /**
@@ -23,9 +30,14 @@ class JatahCutiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(FormBuilder $formBuilder)
     {
-        //
+        $form = $formBuilder->create(\App\Forms\JatahCuti::class, [
+            'method' => 'POST',
+            'route' => 'master.jatah-cuti.store'
+        ]);
+        $title= 'Tambah Data Jatah Cuti';
+        return view('masterdata.form',compact('form','title'));
     }
 
     /**
@@ -36,7 +48,9 @@ class JatahCutiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        JatahCuti::create($request->except(['_token']));
+        Alert::success('Data Berhasil Ditambahkan');
+        return redirect('master/jatah-cuti');
     }
 
     /**
@@ -56,9 +70,18 @@ class JatahCutiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(FormBuilder $formBuilder,$id)
     {
-        //
+        $model = JatahCuti::find($id);
+        $form = $formBuilder->create(\App\Forms\JatahCuti::class, [
+            'method' => 'PUT',
+            'route' => ['master.jatah-cuti.update',$id],
+            'model' =>$model
+        ]);
+
+        $title= 'Ubah Data Master Jatah Cuti';
+
+        return view('masterdata.form',compact('form','title'));
     }
 
     /**
@@ -70,7 +93,9 @@ class JatahCutiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        JatahCuti::find($id)->update($request->except(['_token']));
+        Alert::success('Data Berhasil Diubah');
+        return redirect('master/jatah-cuti');
     }
 
     /**
@@ -81,6 +106,9 @@ class JatahCutiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return JatahCuti::find($id);
+        JatahCuti::find($id)->delete();
+        Alert::success('Data Deleted');
+        return redirect('master/jatah-cuti');
     }
 }
