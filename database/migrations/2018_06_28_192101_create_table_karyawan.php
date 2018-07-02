@@ -21,10 +21,13 @@ class CreateTableKaryawan extends Migration
             $table->date('tanggal_lahir');
             $table->date('tanggal_masuk');
             $table->string('no_hp');
-            $table->string('jabatan');
+            $table->string('level');
             $table->string('username')->unique();
             $table->string('password');
             $table->rememberToken();
+
+            $table->integer('jabatan_id')->unsigned();
+            $table->foreign('jabatan_id')->references('id')->on('jabatan');
 
             $table->integer('divisi_id')->unsigned();
             $table->foreign('divisi_id')->references('id')->on('divisi');

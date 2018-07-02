@@ -76,7 +76,7 @@ class PengajuanCutiController extends Controller
         $request['no_pengajuan']=0;
         $request['tanggal_pengajuan']=date('Y-m-d');
         $request['karyawan_id']=auth()->id();
-        if(auth()->user()->jabatan=='karyawan'){
+        if(auth()->user()->level=='karyawan'){
             $request['status']='propose';
         }else{
             $request['status']='approved';

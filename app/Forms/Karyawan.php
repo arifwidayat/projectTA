@@ -4,12 +4,14 @@ namespace App\Forms;
 
 use Kris\LaravelFormBuilder\Form;
 use App\Models\Divisi;
+use App\Models\Jabatan;
 
 class Karyawan extends Form
 {
     public function buildForm()
     {
-    	$divisi = (new Divisi);
+        $divisi = (new Divisi);
+    	$jabatan = (new Jabatan);
     	
     	$this
     	->add('no','number',[
@@ -32,12 +34,19 @@ class Karyawan extends Form
                 'empty_value' => '- Pilih Divisi -',
                 'label' => 'Divisi'
             ])
-    	->add('jabatan','select',[
+        ->add('jabatan_id', 'select', [
                 'rules'=>'required',
-                'choices' => ['karyawan'=>'Karyawan','kepala divisi'=>'Kepala Divisi','hrd'=>'HRD'],
-                'attr'=>['id'=>'divisi_id'],
+                'choices' => $jabatan->pluck("nama", "id")->toArray(),
+                'attr'=>['id'=>'jabatan_id'],
                 'empty_value' => '- Pilih Jabatan -',
                 'label' => 'Jabatan'
+            ])
+    	->add('level','select',[
+                'rules'=>'required',
+                'choices' => ['admin'=>'Admin','karyawan'=>'Karyawan','kepala divisi'=>'Kepala Divisi','hrd'=>'HRD'],
+                'attr'=>['id'=>'level_id'],
+                'empty_value' => '- Pilih Level -',
+                'label' => 'Level'
         ])
         ->add('submit', 'submit', ['label' => 'Save','attr'=>['class'=>'btn-success btn btn-flat btn-block']]);
     }

@@ -2,10 +2,10 @@
 
 namespace App\DataTables;
 
-use App\Models\Karyawan;
+use App\Models\Jabatan;
 use Yajra\Datatables\Services\DataTable;
 
-class KaryawanDataTable extends DataTable
+class JabatanDataTable extends DataTable
 {
     /**
      * Display ajax response.
@@ -16,15 +16,9 @@ class KaryawanDataTable extends DataTable
     {
         return $this->datatables
             ->eloquent($this->query())
-            ->editColumn('jabatan_id',function($row){
-                return $row->jabatan->nama;
-            })
-            ->editColumn('divisi_id',function($row){
-                return $row->divisi->nama;
-            })
             ->addColumn('action', function($row){
-                return '<a href="'.route('master.karyawan.edit',$row->getKey()).'" class="btn btn-sm btn-primary">Ubah</a>
-                         <form style="display:inline-block" action="'.route('master.karyawan.destroy',$row->getKey()).'" method="POST">'.csrf_field().method_field('DELETE').'
+                return '<a href="'.route('master.jabatan.edit',$row->getKey()).'" class="btn btn-sm btn-primary">Ubah</a>
+                         <form style="display:inline-block" action="'.route('master.jabatan.destroy',$row->getKey()).'" method="POST">'.csrf_field().method_field('DELETE').'
                                   <button class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure want to delete this data?\')">Hapus</button>
                                 </form>
                 ';
@@ -39,7 +33,7 @@ class KaryawanDataTable extends DataTable
      */
     public function query()
     {
-        $query = Karyawan::query()->where('id','!=',auth()->id());
+        $query = Jabatan::query();
 
         return $this->applyScopes($query);
     }
@@ -54,7 +48,7 @@ class KaryawanDataTable extends DataTable
         return $this->builder()
                     ->columns($this->getColumns())
                     ->ajax('')
-                    ->addAction(['width' => '110px'])
+                    ->addAction(['width' => '80px'])
                     ->parameters($this->getBuilderParameters());
     }
 
@@ -66,15 +60,7 @@ class KaryawanDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'no',
             'nama',
-            'tempat_lahir',
-            'tanggal_lahir',
-            'tanggal_masuk',
-            'no_hp',
-            'jabatan_id'=>['title'=>'Jabatan'],
-            'divisi_id'=>['title'=>'Divisi'],
-            'level',
         ];
     }
 
@@ -85,6 +71,6 @@ class KaryawanDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'karyawans_' . time();
+        return 'jabatandatatables_' . time();
     }
 }

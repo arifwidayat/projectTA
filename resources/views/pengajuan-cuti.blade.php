@@ -28,7 +28,7 @@
               </tr>
             </thead>
             <tbody>
-              @php($jabatan=auth()->user()->jabatan)
+              @php($level=auth()->user()->level)
             @forelse($cuti as $value)
               <tr>
                 <td>{{$value->karyawan->no}}</td>
@@ -39,10 +39,10 @@
                 <td>{{$value->tanggal_selesai}}</td>
                 <td>{{$value->keterangan}}</td>
                 <td>
-                  @if($jabatan=='kepala divisi'||$jabatan=='admin')
+                  @if($level=='kepala divisi'||$level=='admin')
                   <a class="btn btn-success btn-sm" href="{{url('pengajuan-cuti',[$value->id,'approved'])}}">Terima</a>
                   @endif
-                  @if($jabatan=='hrd'||$jabatan=='admin')
+                  @if($level=='hrd'||$level=='admin')
                   <a class="btn btn-primary btn-sm" href="{{url('pengajuan-cuti',[$value->id,'verified'])}}">Verifikasi</a>
                   @endif
                   <a class="btn btn-danger btn-sm" href="{{url('pengajuan-cuti',[$value->id,'reject'])}}">Tolak</a>

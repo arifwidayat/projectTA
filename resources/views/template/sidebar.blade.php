@@ -25,8 +25,8 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <li><a href="{{url('dashboard')}}"><i class="fa fa-book"></i> <span>Dashboard</span></a></li>
-        @php($jabatan = auth()->user()->jabatan)
-        @if($jabatan == 'admin')
+        @php($level = auth()->user()->level)
+        @if($level == 'admin')
         <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Data Master</span>
@@ -37,15 +37,16 @@
           <ul class="treeview-menu">
             <li><a href="{{url('master/karyawan')}}"><i class="fa fa-circle-o"></i> Karyawan</a></li>
             <li><a href="{{url('master/divisi')}}"><i class="fa fa-circle-o"></i> Divisi</a></li>
+            <li><a href="{{url('master/jabatan')}}"><i class="fa fa-circle-o"></i> Jabatan</a></li>
             <li><a href="{{url('master/jatah-cuti')}}"><i class="fa fa-circle-o"></i> Jatah Cuti</a></li>
           </ul>
         </li>
         @endif
         <li><a href="{{url('pengajuan-cuti')}}"><i class="fa fa-book"></i> <span>Pengajuan Cuti</span></a></li>
-        @if($jabatan=='kepala divisi'||$jabatan=='admin')
+        @if($level=='kepala divisi'||$level=='admin')
         <li><a href="{{url('pengajuan-cuti/approval')}}"><i class="fa fa-book"></i> <span>Approval Cuti</span></a></li>
         @endif
-        @if($jabatan=='hrd'||$jabatan=='admin')
+        @if($level=='hrd'||$level=='admin')
         <li><a href="{{url('pengajuan-cuti/verifikasi')}}"><i class="fa fa-book"></i> <span>Verif Cuti</span></a></li>
         @endif
       </ul>

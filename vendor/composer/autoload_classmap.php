@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'CreateTableCuti' => $baseDir . '/database/migrations/2018_06_28_192124_create_table_cuti.php',
     'CreateTableDivisi' => $baseDir . '/database/migrations/2018_06_28_192046_create_table_divisi.php',
+    'CreateTableJabatan' => $baseDir . '/database/migrations/2018_07_02_092423_create_table_jabatan.php',
     'CreateTableJatahCuti' => $baseDir . '/database/migrations/2018_06_28_192114_create_table_jatah_cuti.php',
     'CreateTableKaryawan' => $baseDir . '/database/migrations/2018_06_28_192101_create_table_karyawan.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
@@ -84,6 +85,7 @@ return array(
     'Hamcrest\\Util' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
     'Hamcrest\\Xml\\HasXPath' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
+    'Jabatan' => $baseDir . '/database/migrations/2018_07_02_092414_jabatan.php',
     'Maatwebsite\\Excel\\Classes\\Cache' => $vendorDir . '/maatwebsite/excel/src/Maatwebsite/Excel/Classes/Cache.php',
     'Maatwebsite\\Excel\\Classes\\FormatIdentifier' => $vendorDir . '/maatwebsite/excel/src/Maatwebsite/Excel/Classes/FormatIdentifier.php',
     'Maatwebsite\\Excel\\Classes\\LaravelExcelWorksheet' => $vendorDir . '/maatwebsite/excel/src/Maatwebsite/Excel/Classes/LaravelExcelWorksheet.php',

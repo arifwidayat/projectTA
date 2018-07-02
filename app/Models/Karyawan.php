@@ -14,4 +14,12 @@ class Karyawan extends Authenticatable
     public function cuti(){
     	return $this->hasMany('App\Models\Cuti');
     }
+
+    public function jabatan(){
+    	return $this->belongsTo('App\Models\Jabatan');
+    }
+
+    public function divisi(){
+    	return $this->belongsTo('App\Models\Divisi');
+    }
 }
