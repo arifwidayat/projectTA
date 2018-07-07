@@ -27,6 +27,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('cuti','PengajuanCutiController@indexCuti');
 	Route::get('pengajuan-cuti/approval','PengajuanCutiController@approval');
 	Route::get('pengajuan-cuti/verifikasi','PengajuanCutiController@verifikasi');
-	Route::get('pengajuan-cuti/{id}/{status}','PengajuanCutiController@status');
 	Route::resource('pengajuan-cuti','PengajuanCutiController');
+	Route::get('pengajuan-cuti/{id}/{status}','PengajuanCutiController@status');
 });

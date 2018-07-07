@@ -165,12 +165,19 @@ class PengajuanCutiController extends Controller
 
     public function status($id,$status){
         $cuti = Cuti::find($id);
+        $period = \Carbon\CarbonPeriod::create($cuti->tanggal_mulai,$cuti->tanggal_selesai);
+        $diff=0;
+        foreach($period as $date){
+            if(!$date->isSunday()){
+                $diff++;
+            }
+        }
         $cuti->update(['status'=>$status]);
         $jatahcuti=JatahCuti::where('karyawan_id',$cuti->karyawan_id)->first();
         if($status=='approved'){
             $status='Diterima';
         }elseif($status=='verified'){
-            $jatahcuti->update(['jumlah_cuti'=>($jatahcuti->jumlah_cuti-1)]);
+            $jatahcuti->update(['jumlah_cuti'=>($jatahcuti->jumlah_cuti-$diff)]);
             $status='Diverifikasi';
         }elseif($status=='rejected'){
             $status='Ditolak';
