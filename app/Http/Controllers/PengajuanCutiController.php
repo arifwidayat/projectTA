@@ -73,8 +73,23 @@ class PengajuanCutiController extends Controller
     public function store(Request $request)
     {
         if(strtotime($request->get('tanggal_mulai'))>strtotime($request->get('tanggal_selesai'))){
-        return back()->withErrors(['tanggal_selesai'=>'The tanggal selesai must be a date equal or after tanggal mulai.'])->withInput();
+            return back()->withErrors(['tanggal_selesai'=>'The tanggal selesai must be a date equal or after tanggal mulai.'])->withInput();
         }
+
+        $period = \Carbon\CarbonPeriod::create($request->tanggal_mulai,$request->tanggal_selesai);
+        $diff=0;
+        foreach($period as $date){
+            if(!$date->isSunday()){
+                $diff++;
+            }
+        }
+        
+        $jatahcuti = JatahCuti::where('karyawan_id',auth()->id())->where('tahun',date('Y'))->first();
+        if(($jatahcuti->jumlah_cuti-$diff)<0){
+            Alert::error('Maaf, Sisa Cuti tidak mencukupi');
+            return back()->withInput();
+        }
+
         $request['no_pengajuan']=0;
         $request['tanggal_pengajuan']=date('Y-m-d');
         $request['karyawan_id']=auth()->id();
@@ -117,8 +132,9 @@ class PengajuanCutiController extends Controller
         ]);
 
         $title= 'Ubah Data Pengajuan Cuti';
+        $sisacuti=JatahCuti::where('karyawan_id',auth()->id())->first();
 
-        return view('masterdata.form',compact('form','title'));
+        return view('masterdata.form',compact('form','title','sisacuti'));
     }
 
     /**
@@ -130,7 +146,23 @@ class PengajuanCutiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Cuti::find($id)->update($request->except(['_token']));
+
+        $period = \Carbon\CarbonPeriod::create($request->tanggal_mulai,$request->tanggal_selesai);
+        $diff=0;
+        foreach($period as $date){
+            if(!$date->isSunday()){
+                $diff++;
+            }
+        }
+        
+        $jatahcuti = JatahCuti::where('karyawan_id',auth()->id())->where('tahun',date('Y'))->first();
+        if(($jatahcuti->jumlah_cuti-$diff)<0){
+            Alert::error('Maaf, Sisa Cuti tidak mencukupi');
+            return back()->withInput();
+        }
+
+        $cuti = Cuti::find($id);
+        $cuti->update($request->except(['_token']));
         Alert::success('Data Berhasil Diubah');
         return redirect('pengajuan-cuti');
     }
@@ -174,6 +206,7 @@ class PengajuanCutiController extends Controller
         }
         $cuti->update(['status'=>$status]);
         $jatahcuti=JatahCuti::where('karyawan_id',$cuti->karyawan_id)->first();
+
         if($status=='approved'){
             $status='Diterima';
         }elseif($status=='verified'){
