@@ -56,6 +56,13 @@
               </tr>
             @endforelse
             </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="8">
+                  {!! $cuti->links() !!}
+                </td>
+              </tr>
+            </tfoot>
            </table>
         </div>
         <!-- /.box-body -->

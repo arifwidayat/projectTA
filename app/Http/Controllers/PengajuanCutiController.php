@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\DataTables\DaftarCutiDataTable;
 use App\DataTables\PengajuanCutiDataTable;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Models\Cuti;
@@ -15,8 +16,9 @@ use Alert;
 class PengajuanCutiController extends Controller
 {
 
-    public function __construct(){
-        $this->middleware('auth');
+    public function indexCuti(DaftarCutiDataTable $cuti){
+        $title= 'Rekapitulasi Cuti';
+        return $cuti->render('masterdata.index',compact('title'));
     }
     /**
      * Display a listing of the resource.
@@ -40,12 +42,12 @@ class PengajuanCutiController extends Controller
     {
         $this->cekjatahcuti();
 
-        $cuti = Cuti::where('karyawan_id',auth()->id())->where('status','propose')->count();
+        $cuti = Cuti::where('karyawan_id',auth()->id())->where('status','!=','verified')->count();
         
         $jatahcuti = JatahCuti::where('karyawan_id',auth()->id())->where('tahun',date('Y'))->first();
 
         if($cuti>0){
-            Alert::warning('Maaf, Masih ada pengajuan cuti yang belum selesai')->persistent('OK');
+            Alert::warning('Maaf, Masih ada pengajuan cuti yang belum terverifikasi')->persistent('OK');
             return back();
         }
 
@@ -149,15 +151,15 @@ class PengajuanCutiController extends Controller
     public function approval(){
         $title='Approval Pengajuan Cuti';
         $cuti = Cuti::whereHas('karyawan',function($q){
-            $q->where('divisi_id',auth()->user()->divisi_id)->where('jabatan','!=','kepala divisi');
-        })->where('status','propose')->limit('15');
-        
+            $q->where('divisi_id',auth()->user()->divisi_id)->where('level','!=','kepala divisi');
+        })->where('status','propose')->paginate(15);
+
         return view('pengajuan-cuti',compact('cuti','title'));
     }
 
     public function verifikasi(){
         $title='Verifikasi Pengajuan Cuti';
-        $cuti = Cuti::where('status','approved')->limit('15');
+        $cuti = Cuti::where('status','approved')->paginate('15');
         return view('pengajuan-cuti',compact('cuti','title'));
     }
 
@@ -167,7 +169,7 @@ class PengajuanCutiController extends Controller
         if($status=='approved'){
             $status='Diterima';
         }elseif($status=='verified'){
-            $jatahcuti->update(['jumlah_cuti'=>$jatahcuti->jumlah_cuti-1]);
+            $jatahcuti->update(['jumlah_cuti'=>($jatahcuti->jumlah_cuti-1)]);
             $status='Diverifikasi';
         }elseif($status=='rejected'){
             $status='Ditolak';

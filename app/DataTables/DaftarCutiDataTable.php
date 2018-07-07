@@ -5,7 +5,7 @@ namespace App\DataTables;
 use App\Models\Cuti;
 use Yajra\Datatables\Services\DataTable;
 
-class PengajuanCutiDataTable extends DataTable
+class DaftarCutiDataTable extends DataTable
 {
     /**
      * Display ajax response.
@@ -16,6 +16,15 @@ class PengajuanCutiDataTable extends DataTable
     {
         return $this->datatables
             ->eloquent($this->query())
+            ->editColumn('nama_karyawan',function($row){
+                return $row->karyawan->nama;
+            })
+            ->editColumn('tanggal_pengajuan',function($row){
+                return date('d M Y',strtotime($row->tanggal_pengajuan));
+            })
+            ->editColumn('tanggal_cuti',function($row){
+                return date('d M Y',strtotime($row->tanggal_mulai)).' - '.date('d M Y',strtotime($row->tanggal_selesai));
+            })
             ->editColumn('status',function($row){
                 if($row->status == 'propose'){
                     return 'Menunggu Persetujuan Kepala Divisi';
@@ -25,25 +34,6 @@ class PengajuanCutiDataTable extends DataTable
                     return 'Pengajuan Ditolak';
                 }elseif($row->status == 'verified'){
                     return 'Pengajuan Terverifikasi dan Dikabulkan';
-                }
-            })
-            ->editColumn('tanggal_pengajuan',function($row){
-                return date('d M Y',strtotime($row->tanggal_pengajuan));
-            })
-            ->editColumn('tanggal_cuti',function($row){
-                return date('d M Y',strtotime($row->tanggal_mulai)).' - '.date('d M Y',strtotime($row->tanggal_selesai));
-            })
-            ->editColumn('keterangan',function($row){
-                return ($row->keterangan)?:'-';
-            })
-            ->addColumn('action', function($row){
-                if($row->status=='verified'||$row->status=='rejected'){
-                    return '-';
-                }else{
-                    return '<a href="'.route('pengajuan-cuti.edit',$row->getKey()).'" class="btn btn-sm btn-primary">Ubah</a>
-                             <form style="display:inline-block" action="'.route('pengajuan-cuti.destroy',$row->getKey()).'" method="POST">'.csrf_field().method_field('DELETE').'
-                                      <button class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure want to delete this data?\')">Hapus</button>
-                                    </form>';
                 }
             })
             ->make(true);
@@ -56,7 +46,7 @@ class PengajuanCutiDataTable extends DataTable
      */
     public function query()
     {
-        $query = Cuti::query()->where('karyawan_id',auth()->id());
+        $query = Cuti::query();
 
         return $this->applyScopes($query);
     }
@@ -71,8 +61,11 @@ class PengajuanCutiDataTable extends DataTable
         return $this->builder()
                     ->columns($this->getColumns())
                     ->ajax('')
-                    ->addAction(['width' => '110px'])
-                    ->parameters($this->getBuilderParameters());
+                     ->parameters([
+                        'dom' => "<<'col-xs-12 col-sm-12 col-md-12'B><'col-xs-12 col-sm-6 col-md-6'l><'col-xs-12 col-sm-6 col-md-6'f>>rtip",
+                        'buttons' => ['excel', 'print'],
+                    ]);
+                    // ->parameters($this->getBuilderParameters());
     }
 
     /**
@@ -84,10 +77,9 @@ class PengajuanCutiDataTable extends DataTable
     {
         return [
             'no_pengajuan',
-            'jenis_cuti',
+            'nama_karyawan',
             'tanggal_pengajuan',
             'tanggal_cuti',
-            'keterangan',
             'status',
         ];
     }
@@ -99,6 +91,6 @@ class PengajuanCutiDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'pengajuancutis_' . time();
+        return 'laporan_cuti_' . time();
     }
 }

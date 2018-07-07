@@ -6,8 +6,10 @@
           <h3 class="box-title">{{$title}}</h3>
         </div>
         <div class="box-body">
+          @if(!empty($link))
             <a href="{{$link}}" type="button" class="btn btn-success" style="margin-bottom: 10px">
               <i class="fa fa-plus">Tambah</i></a>
+          @endif
           {!! $dataTable->table() !!}
         </div>
         <!-- /.box-body -->

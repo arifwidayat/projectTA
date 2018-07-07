@@ -24,5 +24,6 @@ class Controller extends BaseController
     	}else{
     		$jatahcuti->insert(['karyawan_id'=>auth()->id(),'tahun'=>date('Y'),'jumlah_cuti'=>12]);
     	}
+        return 'success';
     }
 }

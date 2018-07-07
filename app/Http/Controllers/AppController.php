@@ -28,7 +28,7 @@ class AppController extends Controller
 		if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
             $this->cekjatahcuti();
 			Alert::success('Login Berhasil');
-            return redirect()->intended('dashboard');
+            return redirect('dashboard');
         }
     	
     	Alert::error('Maaf, Username atau Password Anda Salah!')->persistent('OK');

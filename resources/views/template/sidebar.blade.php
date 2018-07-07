@@ -1,3 +1,4 @@
+@php($level = auth()->user()->level)
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
@@ -12,9 +13,16 @@
       </div>
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
+        <li class="header">MAIN NAVIGATION {{$level}}</li>
         <li><a href="{{url('dashboard')}}"><i class="fa fa-book"></i> <span>Dashboard</span></a></li>
-        @php($level = auth()->user()->level)
+        <li><a href="{{route('pengajuan-cuti.index')}}"><i class="fa fa-book"></i> <span>Pengajuan Cuti</span></a></li>
+        @if($level=='admin' || $level=='kepala divisi')
+        <li><a href="{{url('pengajuan-cuti/approval')}}"><i class="fa fa-book"></i> <span>Approval Cuti</span></a></li>
+        @endif
+        @if($level=='admin' || $level=='hrd')
+        <li><a href="{{url('pengajuan-cuti/verifikasi')}}"><i class="fa fa-book"></i> <span>Verif Cuti</span></a></li>
+        <li><a href="{{url('cuti')}}"><i class="fa fa-book"></i> <span>Laporan Cuti</span></a></li>
+        @endif
         @if($level == 'admin')
         <li class="treeview">
           <a href="#">
@@ -30,13 +38,6 @@
             <li><a href="{{url('master/jatah-cuti')}}"><i class="fa fa-circle-o"></i> Jatah Cuti</a></li>
           </ul>
         </li>
-        @endif
-        <li><a href="{{url('pengajuan-cuti')}}"><i class="fa fa-book"></i> <span>Pengajuan Cuti</span></a></li>
-        @if($level=='kepala divisi'||$level=='admin')
-        <li><a href="{{url('pengajuan-cuti/approval')}}"><i class="fa fa-book"></i> <span>Approval Cuti</span></a></li>
-        @endif
-        @if($level=='hrd'||$level=='admin')
-        <li><a href="{{url('pengajuan-cuti/verifikasi')}}"><i class="fa fa-book"></i> <span>Verif Cuti</span></a></li>
         @endif
       </ul>
     </section>
