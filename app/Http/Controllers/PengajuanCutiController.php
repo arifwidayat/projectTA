@@ -164,7 +164,8 @@ class PengajuanCutiController extends Controller
     }
 
     public function status($id,$status){
-        $cuti = Cuti::find($id)->update(['status'=>$status]);
+        $cuti = Cuti::find($id);
+        $cuti->update(['status'=>$status]);
         $jatahcuti=JatahCuti::where('karyawan_id',$cuti->karyawan_id)->first();
         if($status=='approved'){
             $status='Diterima';
