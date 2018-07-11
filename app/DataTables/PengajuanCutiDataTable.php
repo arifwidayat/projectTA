@@ -86,7 +86,7 @@ class PengajuanCutiDataTable extends DataTable
             'no_pengajuan',
             'jenis_cuti',
             'tanggal_pengajuan',
-            'tanggal_cuti',
+            'tanggal_cuti'=>['searchable'=>false],
             'keterangan',
             'status',
         ];

@@ -46,7 +46,7 @@ class DaftarCutiDataTable extends DataTable
      */
     public function query()
     {
-        $query = Cuti::query();
+        $query = Cuti::query()->with('karyawan');
 
         return $this->applyScopes($query);
     }
@@ -77,9 +77,9 @@ class DaftarCutiDataTable extends DataTable
     {
         return [
             'no_pengajuan',
-            'nama_karyawan',
+            'nama_karyawan'=>['name'=>'karyawan.nama'],
             'tanggal_pengajuan',
-            'tanggal_cuti',
+            'tanggal_cuti'=>['searchable'=>false],
             'status',
         ];
     }
