@@ -10,6 +10,7 @@ use App\DataTables\KaryawanDataTable;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Models\Karyawan;
 use Alert;
+// use Storage;
 
 class KaryawanController extends Controller
 {
@@ -32,7 +33,7 @@ class KaryawanController extends Controller
      */
     public function create(FormBuilder $formBuilder)
     {
-         $form = $formBuilder->create(\App\Forms\Karyawan::class, [
+        $form = $formBuilder->create(\App\Forms\Karyawan::class, [
             'method' => 'POST',
             'route' => 'master.karyawan.store'
         ]);
@@ -52,6 +53,7 @@ class KaryawanController extends Controller
             'no'=>'required|unique:karyawan,no',
             'username'=>'required|unique:karyawan,username',
             'password'=>'required',
+            // 'photo'=>'max:2000|image|mimes:jpg,png,jpeg,gif'
         ]);
 
         if($request->tanggal_lahir){
@@ -113,6 +115,7 @@ class KaryawanController extends Controller
          $validate = $this->validate($request,[
             'no'=>'required|unique:karyawan,no,'.$id,
             'username'=>'required|unique:karyawan,username,'.$id,
+            // 'photo'=>'max:2000|image|mimes:jpg,png,jpeg,gif'
         ]);
 
         if($request->tanggal_lahir){

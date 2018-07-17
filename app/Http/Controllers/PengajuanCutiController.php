@@ -190,7 +190,7 @@ class PengajuanCutiController extends Controller
     }
 
     public function verifikasi(){
-        $title='Verifikasi Pengajuan Cuti';
+        $title='Validasi Pengajuan Cuti';
         $cuti = Cuti::where('status','approved')->paginate('15');
         return view('pengajuan-cuti',compact('cuti','title'));
     }
@@ -204,7 +204,12 @@ class PengajuanCutiController extends Controller
                 $diff++;
             }
         }
-        $cuti->update(['status'=>$status]);
+        $update['status']=$status;
+        if(request()->has('keterangan')){   
+            $update['keterangan_ditolak']=request()->get('keterangan');
+        }
+
+        $cuti->update($update);
         $jatahcuti=JatahCuti::where('karyawan_id',$cuti->karyawan_id)->first();
 
         if($status=='approved'){

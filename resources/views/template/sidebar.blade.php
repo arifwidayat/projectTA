@@ -20,7 +20,7 @@
         <li><a href="{{url('pengajuan-cuti/approval')}}"><i class="fa fa-book"></i> <span>Approval Cuti</span></a></li>
         @endif
         @if($level=='admin' || $level=='hrd')
-        <li><a href="{{url('pengajuan-cuti/verifikasi')}}"><i class="fa fa-book"></i> <span>Verif Cuti</span></a></li>
+        <li><a href="{{url('pengajuan-cuti/verifikasi')}}"><i class="fa fa-book"></i> <span>Validasi Cuti</span></a></li>
         <li><a href="{{url('cuti')}}"><i class="fa fa-book"></i> <span>Laporan Cuti</span></a></li>
         @endif
         @if($level == 'admin')

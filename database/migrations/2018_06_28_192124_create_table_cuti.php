@@ -20,6 +20,7 @@ class CreateTableCuti extends Migration
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
             $table->text('keterangan');
+            $table->text('keterangan_ditolak');
             $table->enum('status',['propose','approved','verified','rejected']);
 
             $table->integer('karyawan_id')->unsigned();

@@ -45,7 +45,28 @@
                   @if($level=='hrd'||$level=='admin')
                   <a class="btn btn-primary btn-sm" href="{{url('pengajuan-cuti',[$value->id,'verified'])}}">Verifikasi</a>
                   @endif
-                  <a class="btn btn-danger btn-sm" href="{{url('pengajuan-cuti',[$value->id,'reject'])}}">Tolak</a>
+                  <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#tolak" onclick="return confirm('Are you sure want to reject this data?')">Tolak</button>
+
+                    <div class="modal fade" tabindex="-1" role="dialog" id="tolak">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Keterangan</h4>
+                          </div>
+                        <form action="{{url('pengajuan-cuti',[$value->id,'rejected'])}}">
+                          <div class="modal-body">
+                              <textarea name="keterangan" class="form-control"></textarea>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                 </td>
               </tr>
               @empty

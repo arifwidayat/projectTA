@@ -48,6 +48,16 @@ class DaftarCutiDataTable extends DataTable
     {
         $query = Cuti::query()->with('karyawan');
 
+        $start_date = '';
+        $end_date = '';
+        
+        if(request()->get('date')){
+            $date = explode('-',request()->get('date'));
+            $start_date = \Carbon\Carbon::createFromFormat('d/m/Y',$date[0])->format('Y-m-d');
+            $end_date = \Carbon\Carbon::createFromFormat('d/m/Y',$date[1])->format('Y-m-d');
+            $query->whereBetween('tanggal_mulai',[$start_date,$end_date]);
+        }
+
         return $this->applyScopes($query);
     }
 
