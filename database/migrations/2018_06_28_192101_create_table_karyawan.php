@@ -24,10 +24,8 @@ class CreateTableKaryawan extends Migration
             $table->string('level');
             $table->string('username')->unique();
             $table->string('password');
+            $table->text('photo');
             $table->rememberToken();
-
-            $table->integer('jabatan_id')->unsigned();
-            $table->foreign('jabatan_id')->references('id')->on('jabatan');
 
             $table->integer('divisi_id')->unsigned();
             $table->foreign('divisi_id')->references('id')->on('divisi');

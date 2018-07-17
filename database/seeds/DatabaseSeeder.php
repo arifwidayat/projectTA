@@ -16,12 +16,7 @@ class DatabaseSeeder extends Seeder
         $datadivisi->insert(['nama'=>'IT']);
         $datadivisi->insert(['nama'=>'HRD']);
 
-        $datajabatan = new \App\Models\Jabatan;
-        $datajabatan->insert(['nama'=>'programmer']);
-        $datajabatan->insert(['nama'=>'keuangan']);
-        
         $divisi = \App\Models\Divisi::where('nama','IT')->first();
-        $jabatan = \App\Models\Jabatan::where('nama','programmer')->first();
 
         $karyawan = new \App\Models\Karyawan;
         $karyawan->insert([
@@ -32,11 +27,11 @@ class DatabaseSeeder extends Seeder
         		'tanggal_lahir'=>date('Y-m-d'),
         		'tanggal_masuk'=>date('Y-m-d'),
         		'no_hp'=>'1234567890',
-                'jabatan_id'=>$jabatan->id,
         		'level'=>'admin',
         		'username'=>'admin',
         		'password'=>bcrypt('admin'),
         		'divisi_id'=>$divisi->id,
+                'photo'=>asset('img/default-user.png'),
 	        ]);
         $karyawan->insert([
         		'no'=>2,
@@ -46,11 +41,11 @@ class DatabaseSeeder extends Seeder
         		'tanggal_lahir'=>date('Y-m-d'),
         		'tanggal_masuk'=>date('Y-m-d'),
         		'no_hp'=>'1234567890',
-                'jabatan_id'=>$jabatan->id,
         		'level'=>'kepala divisi',
         		'username'=>'kepaladivisi',
         		'password'=>bcrypt('kepaladivisi'),
         		'divisi_id'=>$divisi->id,
+                'photo'=>asset('img/default-user.png'),
 	        ]);
         $karyawan->insert([
         		'no'=>3,
@@ -60,11 +55,11 @@ class DatabaseSeeder extends Seeder
         		'tanggal_lahir'=>date('Y-m-d'),
         		'tanggal_masuk'=>date('Y-m-d'),
         		'no_hp'=>'1234567890',
-                'jabatan_id'=>$jabatan->id,
         		'level'=>'karyawan',
         		'username'=>'karyawan',
         		'password'=>bcrypt('karyawan'),
         		'divisi_id'=>$divisi->id,
+                'photo'=>asset('img/default-user.png'),
 	        ]);
     }
 }

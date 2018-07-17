@@ -16,9 +16,6 @@ class KaryawanDataTable extends DataTable
     {
         return $this->datatables
             ->eloquent($this->query())
-            ->editColumn('jabatan_id',function($row){
-                return $row->jabatan->nama;
-            })
             ->editColumn('divisi_id',function($row){
                 return $row->divisi->nama;
             })
@@ -72,7 +69,6 @@ class KaryawanDataTable extends DataTable
             'tanggal_lahir',
             'tanggal_masuk',
             'no_hp',
-            'jabatan_id'=>['title'=>'Jabatan'],
             'divisi_id'=>['title'=>'Divisi'],
             'level',
         ];

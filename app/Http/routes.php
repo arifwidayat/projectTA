@@ -19,7 +19,6 @@ Route::get('dashboard','AppController@dashboard')->middleware('auth');
 Route::group(['middleware' => 'auth','prefix'=>'master'], function () {
     Route::resource('karyawan','KaryawanController');
     Route::resource('divisi','DivisiController');
-    Route::resource('jabatan','JabatanController');
     Route::resource('jatah-cuti','JatahCutiController');
 });
 

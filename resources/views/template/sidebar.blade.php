@@ -34,7 +34,6 @@
           <ul class="treeview-menu">
             <li><a href="{{url('master/karyawan')}}"><i class="fa fa-circle-o"></i> Karyawan</a></li>
             <li><a href="{{url('master/divisi')}}"><i class="fa fa-circle-o"></i> Divisi</a></li>
-            <li><a href="{{url('master/jabatan')}}"><i class="fa fa-circle-o"></i> Jabatan</a></li>
             <li><a href="{{url('master/jatah-cuti')}}"><i class="fa fa-circle-o"></i> Jatah Cuti</a></li>
           </ul>
         </li>
