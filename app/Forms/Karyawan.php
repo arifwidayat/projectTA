@@ -12,8 +12,9 @@ class Karyawan extends Form
         $divisi = (new Divisi);
     	
     	$this
-        ->add('no','number',[
-    		'rules'=>'required'
+        ->add('id','text',[
+    		'rules'=>'required',
+            'label' => 'No'
     	])
     	->add('nama','text',[
     		'rules'=>'required'

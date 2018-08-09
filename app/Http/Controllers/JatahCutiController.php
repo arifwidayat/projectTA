@@ -106,7 +106,6 @@ class JatahCutiController extends Controller
      */
     public function destroy($id)
     {
-        return JatahCuti::find($id);
         JatahCuti::find($id)->delete();
         Alert::success('Data Deleted');
         return redirect('master/jatah-cuti');

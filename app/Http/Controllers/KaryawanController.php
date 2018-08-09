@@ -50,7 +50,7 @@ class KaryawanController extends Controller
     public function store(Request $request)
     {
         $validate = $this->validate($request,[
-            'no'=>'required|unique:karyawan,no',
+            'id'=>'required|unique:karyawan,id',
             'username'=>'required|unique:karyawan,username',
             'password'=>'required',
             // 'photo'=>'max:2000|image|mimes:jpg,png,jpeg,gif'
@@ -113,7 +113,7 @@ class KaryawanController extends Controller
     public function update(Request $request, $id)
     {
          $validate = $this->validate($request,[
-            'no'=>'required|unique:karyawan,no,'.$id,
+            'id'=>'required|unique:karyawan,id,'.$id,
             'username'=>'required|unique:karyawan,username,'.$id,
             // 'photo'=>'max:2000|image|mimes:jpg,png,jpeg,gif'
         ]);

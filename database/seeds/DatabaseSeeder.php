@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
 
         $karyawan = new \App\Models\Karyawan;
         $karyawan->insert([
-        		'no'=>1,
+        		'id'=>1,
         		'nama'=>'admin',
         		'email'=>'admin@mail.com',
         		'tempat_lahir'=>'terminal',
@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
                 'photo'=>asset('img/default-user.png'),
 	        ]);
         $karyawan->insert([
-        		'no'=>2,
+        		'id'=>2,
         		'nama'=>'kepala divisi',
         		'email'=>'kepaladivisi@mail.com',
         		'tempat_lahir'=>'terminal',
@@ -48,7 +48,7 @@ class DatabaseSeeder extends Seeder
                 'photo'=>asset('img/default-user.png'),
 	        ]);
         $karyawan->insert([
-        		'no'=>3,
+        		'id'=>3,
         		'nama'=>'karyawan',
         		'email'=>'karyawan@mail.com',
         		'tempat_lahir'=>'terminal',

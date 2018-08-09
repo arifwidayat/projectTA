@@ -13,8 +13,7 @@ class CreateTableKaryawan extends Migration
     public function up()
     {
         Schema::create('karyawan', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('no');
+            $table->string('id')->unique();
             $table->string('nama');
             $table->string('email');
             $table->string('tempat_lahir');
@@ -28,7 +27,7 @@ class CreateTableKaryawan extends Migration
             $table->rememberToken();
 
             $table->integer('divisi_id')->unsigned();
-            $table->foreign('divisi_id')->references('id')->on('divisi');
+            $table->foreign('divisi_id')->references('id')->on('divisi')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

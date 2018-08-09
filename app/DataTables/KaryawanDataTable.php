@@ -63,7 +63,7 @@ class KaryawanDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'no',
+            'id',
             'nama',
             'tempat_lahir',
             'tanggal_lahir',

@@ -23,8 +23,8 @@ class CreateTableCuti extends Migration
             $table->text('keterangan_ditolak');
             $table->enum('status',['propose','approved','verified','rejected']);
 
-            $table->integer('karyawan_id')->unsigned();
-            $table->foreign('karyawan_id')->references('id')->on('karyawan');
+            $table->string('karyawan_id');
+            $table->foreign('karyawan_id')->references('id')->on('karyawan')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

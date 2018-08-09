@@ -17,8 +17,8 @@ class CreateTableJatahCuti extends Migration
             $table->string('tahun');
             $table->string('jumlah_cuti');
             
-            $table->integer('karyawan_id')->unsigned();
-            $table->foreign('karyawan_id')->references('id')->on('karyawan');
+            $table->string('karyawan_id');
+            $table->foreign('karyawan_id')->references('id')->on('karyawan')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

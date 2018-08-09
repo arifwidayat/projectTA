@@ -16,11 +16,8 @@ class JatahCutiDataTable extends DataTable
     {
         return $this->datatables
             ->eloquent($this->query())
-            ->addColumn('no_karyawan',function($row){
+            ->addColumn('nama',function($row){
                 return $row->karyawan->nama;
-            })
-            ->addColumn('no_karyawan',function($row){
-                return $row->karyawan->no;
             })
             ->addColumn('action', function($row){
                 return '<a href="'.route('master.jatah-cuti.edit',$row->getKey()).'" class="btn btn-sm btn-primary">Ubah</a>
@@ -40,7 +37,7 @@ class JatahCutiDataTable extends DataTable
     public function query()
     {
         $query = JatahCuti::query();
-        $query->with('karyawan')->select('jatah_cuti.id','nama','no','tahun','jumlah_cuti','karyawan_id');
+        $query->with('karyawan');
 
         return $this->applyScopes($query);
     }
@@ -67,8 +64,8 @@ class JatahCutiDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'no_karyawan'=>[
-                'name'=>'karyawan.no'
+            'karyawan_id'=>[
+                'title' =>'No Karyawan',
             ],
             'nama'=>[
                 'name'=>'karyawan.nama'
