@@ -10,7 +10,7 @@ use App\DataTables\KaryawanDataTable;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Models\Karyawan;
 use Alert;
-// use Storage;
+use Storage;
 
 class KaryawanController extends Controller
 {
@@ -53,8 +53,17 @@ class KaryawanController extends Controller
             'id'=>'required|unique:karyawan,id',
             'username'=>'required|unique:karyawan,username',
             'password'=>'required',
-            // 'photo'=>'max:2000|image|mimes:jpg,png,jpeg,gif'
+            'profil_pic'=>'max:2000|image|mimes:jpg,png,jpeg,gif'
         ]);
+
+        if($request->hasFile('profil_pic')){
+            $image      = $request->file('profil_pic');
+            $fileName   = time() . '.' . $image->getClientOriginalExtension();
+            Storage::disk('public_upload')->put($fileName,file_get_contents($image));
+            $request['photo']='img/'.$fileName;
+        }else{
+            $request['photo']=asset('img/default-user.png');
+        }
 
         if($request->tanggal_lahir){
             $request['tanggal_lahir']=date('Y-m-d',strtotime($request->tanggal_lahir));
@@ -66,7 +75,7 @@ class KaryawanController extends Controller
             $request['password']=bcrypt($request->password);
         }
 
-        Karyawan::create($request->except(['_token']));
+        Karyawan::create($request->except(['_token','profil_pic']));
         Alert::success('Data Berhasil Ditambahkan');
         return redirect('master/karyawan');
     }
@@ -115,8 +124,17 @@ class KaryawanController extends Controller
          $validate = $this->validate($request,[
             'id'=>'required|unique:karyawan,id,'.$id,
             'username'=>'required|unique:karyawan,username,'.$id,
-            // 'photo'=>'max:2000|image|mimes:jpg,png,jpeg,gif'
+            'profil_pic'=>'max:2000|image|mimes:jpg,png,jpeg,gif'
         ]);
+
+         if($request->hasFile('profil_pic')){
+            $image      = $request->file('profil_pic');
+            $fileName   = time() . '.' . $image->getClientOriginalExtension();
+            Storage::disk('public_upload')->put($fileName,file_get_contents($image));
+            $request['photo']='img/'.$fileName;
+        }else{
+            $request['photo']=asset('img/default-user.png');
+        }
 
         if($request->tanggal_lahir){
             $request['tanggal_lahir']=date('Y-m-d',strtotime($request->tanggal_lahir));
@@ -130,7 +148,7 @@ class KaryawanController extends Controller
             unset($request['password']);
         }
 
-        Karyawan::find($id)->update($request->except(['_token']));
+        Karyawan::find($id)->update($request->except(['_token','profil_pic']));
         Alert::success('Data Berhasil Diubah');
         return redirect('master/karyawan');
     }

@@ -48,10 +48,10 @@ return [
             'root' => storage_path('app'),
         ],
 
-        'public' => [
+        'public_upload' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'visibility' => 'public',
+            'root' => public_path('img'),
+            // 'visibility' => 'public',
         ],
 
         's3' => [

@@ -5,7 +5,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{asset('img/default-user.png')}}" class="img-circle" alt="User Image">
+          <img src="{{asset(auth()->user()->photo)}}"  style="max-height: 45px;max-width: 45px;height: 45px;"  class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p style="white-space: normal;">{{auth()->user()->nama}}</p>

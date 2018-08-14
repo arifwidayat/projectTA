@@ -12,6 +12,9 @@ class Karyawan extends Form
         $divisi = (new Divisi);
     	
     	$this
+        ->add('profil_pic','file',[ 
+            'label'=>'Photo'
+        ])
         ->add('id','text',[
     		'rules'=>'required',
             'label' => 'No'

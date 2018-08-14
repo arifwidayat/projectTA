@@ -21,13 +21,13 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="{{asset('img/default-user.png')}}" class="user-image" alt="User Image">
+              <img src="{{asset(auth()->user()->photo)}}" style="height: 25px;width: 25px" class="user-image" alt="User Image">
               <span class="hidden-xs">{{auth()->user()->nama}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{{asset('img/default-user.png')}}" class="img-circle" alt="User Image">
+                <img src="{{asset(auth()->user()->photo)}}" style="height: 90px;width: 90px" class="img-circle" alt="User Image">
 
                 <p>
                   {{auth()->user()->nama}}
@@ -36,7 +36,7 @@
              
               <li class="user-footer">
                 <div align="center">
-                  <a href="#" class="btn btn-flat btn-success pull-left">
+                  <a href="{{url('profile')}}" class="btn btn-flat btn-success pull-left">
                     Profile
                   </a>
                    <a class="btn btn-danger btn-flat pull-right" href="{{ url('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>

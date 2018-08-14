@@ -15,6 +15,8 @@ Route::get('/', 'AppController@index')->middleware('guest');
 Route::post('login','AppController@postLogin');
 Route::post('logout','AppController@logout');
 Route::get('dashboard','AppController@dashboard')->middleware('auth');
+Route::get('profile','AppController@profile')->middleware('auth');
+Route::post('profile','AppController@updateProfile')->middleware('auth');
 
 Route::group(['middleware' => 'auth','prefix'=>'master'], function () {
     Route::resource('karyawan','KaryawanController');
