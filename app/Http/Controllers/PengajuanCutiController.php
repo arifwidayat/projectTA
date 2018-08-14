@@ -83,10 +83,15 @@ class PengajuanCutiController extends Controller
                 $diff++;
             }
         }
+
+        if($request->jenis_cuti != 'Cuti Tahunan' && $diff>2){
+            Alert::warning('Maaf, Pengambilan cuti untuk jenis '.strtolower($request->jenis_cuti).' maximal 2 hari')->persistent();
+            return back()->withInput();
+        }
         
         $jatahcuti = JatahCuti::where('karyawan_id',auth()->id())->where('tahun',date('Y'))->first();
         if(($jatahcuti->jumlah_cuti-$diff)<0){
-            Alert::error('Maaf, Sisa Cuti tidak mencukupi');
+            Alert::error('Maaf, Sisa Cuti tidak mencukupi')->persistent();
             return back()->withInput();
         }
 
@@ -215,7 +220,9 @@ class PengajuanCutiController extends Controller
         if($status=='approved'){
             $status='Diterima';
         }elseif($status=='verified'){
-            $jatahcuti->update(['jumlah_cuti'=>($jatahcuti->jumlah_cuti-$diff)]);
+            if($cuti->jenis_cuti=='Cuti Tahunan'){   
+                $jatahcuti->update(['jumlah_cuti'=>($jatahcuti->jumlah_cuti-$diff)]);
+            }
             $status='Diverifikasi';
         }elseif($status=='rejected'){
             $status='Ditolak';

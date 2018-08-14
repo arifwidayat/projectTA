@@ -35,8 +35,11 @@
               </li>
              
               <li class="user-footer">
-                <div>
-                   <a class="btn btn-default btn-flat btn-block" href="{{ url('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                <div align="center">
+                  <a href="#" class="btn btn-flat btn-success pull-left">
+                    Profile
+                  </a>
+                   <a class="btn btn-danger btn-flat pull-right" href="{{ url('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                   <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
                       {{ csrf_field() }}
                   </form>

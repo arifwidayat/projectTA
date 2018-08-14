@@ -14,6 +14,14 @@ class PengajuanCuti extends Form
     					'Cuti Hamil'=>'Cuti Hamil',
     					'Cuti Penting'=>'Cuti Penting'
     				];
+
+        foreach($jenis_cuti as $value){
+            $cuti = \App\Models\Cuti::whereYear('tanggal_mulai','=',date('Y'))->where('status','verified')->where('jenis_cuti',$value)->first();
+            if(!empty($cuti)){
+                unset($jenis_cuti[$value]);
+            }
+        }
+
         $this
     	->add('jenis_cuti', 'select', [
                 'rules'=>'required',
