@@ -13,11 +13,12 @@ class Karyawan extends Form
     	
     	$this
         ->add('profil_pic','file',[ 
-            'label'=>'Photo'
+            'label'=>'Photo',
         ])
         ->add('id','text',[
-    		'rules'=>'required',
-            'label' => 'No'
+            'rules'=>'required',
+            'label' => 'No',
+            'attr'=>['class'=>'id_karyawan form-control']
     	])
     	->add('nama','text',[
     		'rules'=>'required'

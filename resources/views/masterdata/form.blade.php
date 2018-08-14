@@ -15,3 +15,13 @@
       </div>
       <!-- /.box -->
 @endsection
+
+@section('script')
+<script type="text/javascript">
+  $('.id_karyawan').keydown(function(e){
+    if(e.keyCode==220 || e.keyCode==191){
+    e.preventDefault()
+    }
+  })
+</script>
+@endsection

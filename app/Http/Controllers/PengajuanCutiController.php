@@ -196,7 +196,7 @@ class PengajuanCutiController extends Controller
 
     public function verifikasi(){
         $title='Validasi Pengajuan Cuti';
-        $cuti = Cuti::where('status','approved')->paginate('15');
+        $cuti = Cuti::where('karyawan_id','!=',auth()->user()->id)->where('status','approved')->paginate('15');
         return view('pengajuan-cuti',compact('cuti','title'));
     }
 
