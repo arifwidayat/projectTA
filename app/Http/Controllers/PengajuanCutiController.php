@@ -42,7 +42,7 @@ class PengajuanCutiController extends Controller
     {
         $this->cekjatahcuti();
 
-        $cuti = Cuti::where('karyawan_id',auth()->id())->where('status','!=','verified')->count();
+        $cuti = Cuti::where('karyawan_id',auth()->id())->whereNotIn('status',['verified','rejected'])->count();
         
         $jatahcuti = JatahCuti::where('karyawan_id',auth()->id())->where('tahun',date('Y'))->first();
 
