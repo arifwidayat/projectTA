@@ -36,6 +36,9 @@ class PengajuanCutiDataTable extends DataTable
             ->editColumn('keterangan',function($row){
                 return ($row->keterangan)?:'-';
             })
+            ->editColumn('keterangan_ditolak',function($row){
+                return ($row->keterangan_ditolak)?:'-';
+            })
             ->addColumn('action', function($row){
                 if($row->status=='verified'||$row->status=='rejected'){
                     return '-';
@@ -88,6 +91,7 @@ class PengajuanCutiDataTable extends DataTable
             'tanggal_pengajuan',
             'tanggal_cuti'=>['searchable'=>false],
             'keterangan',
+            'keterangan_ditolak',
             'status',
         ];
     }

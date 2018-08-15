@@ -31,7 +31,7 @@
               @php($level=auth()->user()->level)
             @forelse($cuti as $value)
               <tr>
-                <td>{{$value->karyawan->no}}</td>
+                <td>{{$value->karyawan_id}}</td>
                 <td>{{$value->no_pengajuan}}</td>
                 <td>{{$value->tanggal_pengajuan}}</td>
                 <td>{{$value->jenis_cuti}}</td>
