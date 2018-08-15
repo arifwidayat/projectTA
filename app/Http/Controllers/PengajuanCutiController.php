@@ -104,7 +104,7 @@ class PengajuanCutiController extends Controller
             $request['status']='approved';
         }
         $cuti = Cuti::create($request->except(['_token']));
-        $cuti->no_pengajuan=$cuti->id;
+        $cuti->no_pengajuan='TSC/SC/'.date('m').'/'.date('y').'/'.sprintf('%06d', $cuti->id);
         $cuti->save();
         Alert::success('Data Berhasil Ditambahkan');
         return redirect('pengajuan-cuti');
